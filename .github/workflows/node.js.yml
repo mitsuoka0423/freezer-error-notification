@@ -6,12 +6,15 @@ on:
     - cron: '0,10,20,30,40,50 * * * *'
   push:
 
+
 jobs:
   build:
     runs-on: ubuntu-latest
+
     strategy:
       matrix:
         node-version: [18.x]
+
     steps:
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
@@ -19,10 +22,11 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-      env:
-        SWITCH_BOT_TOKEN: ${{secrets.SWITCH_BOT_TOKEN}}
-        SWITCH_BOT_CLIENT_SECRET: ${{secrets.SWITCH_BOT_CLIENT_SECRET}}
-        LINE_CHANNEL_ACCESS_TOKEN: ${{secrets.LINE_CHANNEL_ACCESS_TOKEN}}
     - run: npm i -g bun
     - run: bun i
-    - run: bun run index.ts
+    - name: Run index.ts
+      run: bun run index.ts
+      env:
+        SWITCH_BOT_TOKEN: ${{ secrets.SWITCH_BOT_TOKEN }}
+        SWITCH_BOT_CLIENT_SECRET: ${{ secrets.SWITCH_BOT_CLIENT_SECRET }}
+        LINE_CHANNEL_ACCESS_TOKEN: ${{ secrets.LINE_CHANNEL_ACCESS_TOKEN }}
