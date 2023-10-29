@@ -18,9 +18,9 @@ const humidity = await meter.getHumidity();
 
 console.log({ temperatue, humidity });
 
-if (temperatue < -5) {
-  console.log("問題なし");
-} else {
+// if (temperatue < -5) {
+//   console.log("問題なし");
+// } else {
   await lineClient.broadcast({
     messages: [{
       type: "flex",
@@ -120,4 +120,4 @@ if (temperatue < -5) {
     }]
   });
   console.log("LINEにメッセージを送信しました");
-}
+// }
