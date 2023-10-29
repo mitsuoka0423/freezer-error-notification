@@ -13,14 +13,14 @@ const switchbot = new SwitchBot({
 console.log('冷凍庫の温度を取得します');
 
 const meter = await switchbot.meter("E05C356C390D");
-const temperatue = await meter.getTemperature();
+const temperature = await meter.getTemperature();
 const humidity = await meter.getHumidity();
 
-console.log({ temperatue, humidity });
+console.log({ temperature: temperature, humidity });
 
-// if (temperatue < -5) {
-//   console.log("問題なし");
-// } else {
+if (temperature < -5) {
+  console.log("問題なし");
+} else {
   await lineClient.broadcast({
     messages: [{
       type: "flex",
@@ -82,7 +82,7 @@ console.log({ temperatue, humidity });
                     },
                     {
                       "type": "text",
-                      "text": `${temperatue}℃`,
+                      "text": `${temperature}℃`,
                       "wrap": true,
                       "color": "#666666",
                       "size": "sm",
@@ -120,4 +120,4 @@ console.log({ temperatue, humidity });
     }]
   });
   console.log("LINEにメッセージを送信しました");
-// }
+}
