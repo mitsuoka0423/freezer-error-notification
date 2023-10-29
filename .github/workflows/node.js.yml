@@ -29,4 +29,6 @@ jobs:
       env:
         SWITCH_BOT_TOKEN: ${{ secrets.SWITCH_BOT_TOKEN }}
         SWITCH_BOT_CLIENT_SECRET: ${{ secrets.SWITCH_BOT_CLIENT_SECRET }}
+        SWITCH_BOT_METER_DEVICE_ID: ${{ secrets.SWITCH_BOT_METER_DEVICE_ID }}
         LINE_CHANNEL_ACCESS_TOKEN: ${{ secrets.LINE_CHANNEL_ACCESS_TOKEN }}
+        LINE_GROUP_ID: ${{ secrets.LINE_GROUP_ID }}

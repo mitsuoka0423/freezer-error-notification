@@ -1,18 +1,23 @@
 import * as line from '@line/bot-sdk';
 import SwitchBot from "@lucadiba/switchbot-client";
 
+const LINE_CHANNEL_ACCESS_TOKEN = Bun.env.LINE_CHANNEL_ACCESS_TOKEN || "";
+const SWITCH_BOT_TOKEN = Bun.env.SWITCH_BOT_TOKEN || "";
+const SWITCH_BOT_CLIENT_SECRET = Bun.env.SWITCH_BOT_CLIENT_SECRET || "";
+const SWITCH_BOT_METER_DEVICE_ID = Bun.env.SWITCH_BOT_METER_DEVICE_ID || "";
+
 const lineClient = new line.messagingApi.MessagingApiClient({
-  channelAccessToken: Bun.env.LINE_CHANNEL_ACCESS_TOKEN || "",
+  channelAccessToken: LINE_CHANNEL_ACCESS_TOKEN,
 });
 
 const switchbot = new SwitchBot({
-  openToken: Bun.env.SWITCH_BOT_TOKEN || "",
-  secretKey: Bun.env.SWITCH_BOT_CLIENT_SECRET || "",
+  openToken: SWITCH_BOT_TOKEN,
+  secretKey: SWITCH_BOT_CLIENT_SECRET,
 });
 
 console.log('冷凍庫の温度を取得します');
 
-const meter = await switchbot.meter("E05C356C390D");
+const meter = await switchbot.meter(SWITCH_BOT_METER_DEVICE_ID);
 const temperature = await meter.getTemperature();
 const humidity = await meter.getHumidity();
 
@@ -21,7 +26,8 @@ console.log({ temperature: temperature, humidity });
 if (temperature < -5) {
   console.log("問題なし");
 } else {
-  await lineClient.broadcast({
+  await lineClient.pushMessage({
+    to: Bun.env.LINE_GROUP_ID || "",
     messages: [{
       type: "flex",
       altText: "冷凍庫温度上昇アラート",
