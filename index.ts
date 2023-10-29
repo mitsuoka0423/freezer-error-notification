@@ -23,9 +23,9 @@ const humidity = await meter.getHumidity();
 
 console.log({ temperature: temperature, humidity });
 
-if (temperature < -5) {
-  console.log("問題なし");
-} else {
+// if (temperature < -5) {
+//   console.log("問題なし");
+// } else {
   await lineClient.pushMessage({
     to: Bun.env.LINE_GROUP_ID || "",
     messages: [{
@@ -126,4 +126,4 @@ if (temperature < -5) {
     }]
   });
   console.log("LINEにメッセージを送信しました");
-}
+// }
